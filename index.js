@@ -1,5 +1,5 @@
-const { Client } = require('discord.js-selfbot-v13');
 const config = require('./config.json');
+const { Client } = require('discord.js-selfbot-v13');
 
 /** @type {Set<import('discord.js-selfbot-v13').Client>} */
 const clients = new Set();
@@ -19,12 +19,13 @@ for (const token of config.tokens) {
 
         console.clear();
 
-        client.once('ready', () => {
+        client.once('ready', async () => {
             if (config.status === "online") client.user?.setStatus("online");
             else if (config.status === "idle") client.user?.setStatus("idle");
             else if (config.status === "dnd") client.user?.setStatus("dnd");
     
-            console.log(`${c.bold}spoofed as ${c.blue}${browser}${c.reset} on ${c.blue}${c.bold}${device.name}${c.reset} | ${c.bold}${client.user?.username}${c.reset}`);
+            console.log(`${c.bold}spoofed as ${c.blue}${browser}${c.reset} on ${c.blue}${c.bold}${device.name}${c.reset} for @${c.bold}${client.user?.username}${c.reset}${c.blue}${c.bold} | ${c.reset}${c.bold}${client.user?.id}${c.reset}`);
+
         });
 
         client.login(token).catch(console.error);
@@ -33,6 +34,7 @@ for (const token of config.tokens) {
 }
 
 process.once('SIGINT', () => {
+    console.log(`\n${c.bold}destroying all active clients...${c.reset}`);
     clients.forEach(client => client.destroy());
     process.exit(0);
 });
