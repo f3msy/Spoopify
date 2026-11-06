@@ -1,14 +1,14 @@
-// @ts-check
-
 const { Client } = require('discord.js-selfbot-v13');
 const config = require('./config.json');
 
 /** @type {Set<import('discord.js-selfbot-v13').Client>} */
 const clients = new Set();
 
-const blue = '\x1b[34m';
-const bold = '\x1b[1m';
-const reset = '\x1b[0m';
+const c = {
+    blue : '\x1b[34m',
+    bold : '\x1b[1m',
+    reset : '\x1b[0m'
+}
 
 for (const token of config.tokens) {
     for (const [browser, device] of Object.entries(config.devices)) {
@@ -24,7 +24,7 @@ for (const token of config.tokens) {
             else if (config.status === "idle") client.user?.setStatus("idle");
             else if (config.status === "dnd") client.user?.setStatus("dnd");
     
-            console.log(`${bold}spoofed as ${blue}${browser}${reset} on ${blue}${bold}${device.name}${reset} | ${bold}${client.user?.username}${reset}`);
+            console.log(`${c.bold}spoofed as ${c.blue}${browser}${c.reset} on ${c.blue}${c.bold}${device.name}${c.reset} | ${c.bold}${client.user?.username}${c.reset}`);
         });
 
         client.login(token).catch(console.error);
@@ -34,7 +34,5 @@ for (const token of config.tokens) {
 
 process.once('SIGINT', () => {
     clients.forEach(client => client.destroy());
-    // destroy each client, due to it keeping on the gateway WSS for a bit after.
-    
     process.exit(0);
 });
