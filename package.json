@@ -1,16 +1,23 @@
 {
-  "name": "discord-self",
+  "name": "Discord device spoofer",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple Discord device spoofer",
   "license": "ISC",
-  "author": "obaqz",
+  "author": "femsy",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "start:ts": "ts-node index.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "debug": "^4.4.3",
     "discord.js-selfbot-v13": "^3.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
   }
 }
