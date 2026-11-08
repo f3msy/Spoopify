@@ -7,8 +7,11 @@ const clients = new Set();
 const c = {
     blue : '\x1b[34m',
     bold : '\x1b[1m',
-    reset : '\x1b[0m'
+    reset : '\x1b[0m',
+    boldyellow : '\x1b[33m'
 }
+
+let Clients = 0
 
 for (const token of config.tokens) {
     for (const [browser, device] of Object.entries(config.devices)) {
@@ -25,6 +28,7 @@ for (const token of config.tokens) {
             else if (config.status === "dnd") client.user?.setStatus("dnd");
     
             console.log(`${c.bold}spoofed as ${c.blue}${browser}${c.reset} on ${c.blue}${c.bold}${device.name}${c.reset} for @${c.bold}${client.user?.username}${c.reset}${c.blue}${c.bold} | ${c.reset}${c.bold}${client.user?.id}${c.reset}`);
+            Clients++;
 
         });
 
@@ -34,7 +38,7 @@ for (const token of config.tokens) {
 }
 
 process.once('SIGINT', () => {
-    console.log(`\n${c.bold}destroying all active clients...${c.reset}`);
+    console.log(`\n${c.bold}destroying ${c.boldyellow}${Clients}${c.reset} ${c.bold}active clients...${c.reset}`);
     clients.forEach(client => client.destroy());
     process.exit(0);
 });
